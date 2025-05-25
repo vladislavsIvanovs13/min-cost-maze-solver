@@ -1,21 +1,24 @@
 // Based on https://www.baeldung.com/java-solve-maze
 
-package org.maze;
+package org.maze.solvers;
 
 import lombok.RequiredArgsConstructor;
+import org.maze.Cell;
+import org.maze.Direction;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
 import static java.lang.Math.min;
 
-/** Special class for solving given maze with minimal cost. */
+/** Special class for solving given maze using BFS. */
 @RequiredArgsConstructor
-public class MinCostMazeSolver {
+public class BfsMazeSolver implements MazeSolver {
     private final Cell[][] maze;
 
     /** Solves maze with BFS (Breadth First Search) approach
      * by sequentially exploring levels of a tree which represents the maze. */
+    @Override
     public int solve() {
         // Since the paths from S to G and from G to S are equivalent,
         // we will use the easiest approach and move from G,
@@ -70,7 +73,8 @@ public class MinCostMazeSolver {
 
     /** Verifies that the coordinates of a new cell are within the maze,
      * next cell is not a wall and hasn't been visited. */
-    private boolean isAvailable(int x, int y) {
+    @Override
+    public boolean isAvailable(int x, int y) {
         return (x >= 0 && x < maze.length &&
                 y >= 0 && y < maze.length &&
                 maze[x][y].getValue() != 'X' &&
